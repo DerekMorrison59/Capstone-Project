@@ -3,21 +3,37 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_now_playing"
+            android:icon="@drawable/ic_music_note_black_24dp"
+            android:title="Now Playing" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_current_playlist"
+            android:icon="@drawable/ic_queue_music_black_24dp"
+            android:title="Current Playlist" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_all_playlists"
+            android:icon="@drawable/ic_library_music_black_24dp"
+            android:title="All Playlists" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_favorite_folders"
+            android:icon="@drawable/ic_folder_black_24dp"
+            android:title="Favorite Folders" />
+        <item
+            android:id="@+id/nav_current_folder"
+            android:icon="@drawable/ic_folder_open_black_24dp"
+            android:title="Current Folder" />
+        <item
+            android:id="@+id/nav_servers"
+            android:icon="@drawable/ic_storage_black_24dp"
+            android:title="Servers" />
+        <item
+            android:id="@+id/nav_discovery_status"
+            android:icon="@drawable/ic_view_list_black_24dp"
+            android:title="Discovery Status" />
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="Search" />
     </group>
 
     <item android:title="Communicate">

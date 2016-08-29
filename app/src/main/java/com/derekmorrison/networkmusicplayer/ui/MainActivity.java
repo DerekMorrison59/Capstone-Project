@@ -1,8 +1,10 @@
-package com.derekmorrison.networkmusicplayer;
+package com.derekmorrison.networkmusicplayer.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,15 +15,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.derekmorrison.networkmusicplayer.R;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    static ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // todo find a way to only do this once - ?? shared prefs ??
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            OnboardingFragment fragment = new OnboardingFragment();
+            transaction.replace(R.id.sample_content_fragment, fragment);
+            transaction.commit();
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mActionBar =  getSupportActionBar();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +56,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
@@ -50,6 +68,10 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    public static void setToolbarTitle(String newTitle) {
+        mActionBar.setTitle(newTitle);
     }
 
     @Override
@@ -80,17 +102,30 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_now_playing) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            NowPlayingFragment fragment = new NowPlayingFragment();
+            transaction.replace(R.id.sample_content_fragment, fragment);
+            transaction.commit();
+        } else if (id == R.id.nav_current_playlist) {
 
-        } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_current_folder) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            DirectoryFragment fragment = new DirectoryFragment();
+            transaction.replace(R.id.sample_content_fragment, fragment);
+            transaction.commit();
+        } else if (id == R.id.nav_servers) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            AllServersFragment fragment = new AllServersFragment();
+            transaction.replace(R.id.sample_content_fragment, fragment);
+            transaction.commit();
+        } else if (id == R.id.nav_discovery_status) {
+            // switch to the Initial Network Scan fragment
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            InitialScanFragment fragment = new InitialScanFragment();
+            transaction.replace(R.id.sample_content_fragment, fragment);
+            transaction.commit();
 
         }
 

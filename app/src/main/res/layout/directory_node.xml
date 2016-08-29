@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:id="@+id/directoryNodeLayout"
+    android:layout_height="@dimen/node_height"
+    android:layout_marginTop="@dimen/node_marginTop"
+    android:layout_marginStart="@dimen/node_marginStart"
+    android:layout_marginEnd="@dimen/node_marginEnd"
+    android:background="#ffffff"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="Directory Name"
+        android:id="@+id/directoryName"
+        />
+
+</LinearLayout>
