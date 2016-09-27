@@ -102,7 +102,7 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
     private final MediaControllerCompat.Callback mCallback = new MediaControllerCompat.Callback() {
         @Override
         public void onPlaybackStateChanged(@NonNull PlaybackStateCompat state) {
-            Log.d(TAG, "onPlaybackstate changed: " + state);
+//            Log.d(TAG, "onPlaybackstate changed: " + state);
             updatePlaybackState(state);
         }
 
@@ -262,8 +262,9 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
             state = mMediaController.getPlaybackState().getState();
         }
         updatePlaybackControls(state);
-        updatePlaybackState(mMediaController.getPlaybackState());
-
+        if (null != mMediaController) {
+            updatePlaybackState(mMediaController.getPlaybackState());
+        }
         updateScreen();
         updateProgress();
 
