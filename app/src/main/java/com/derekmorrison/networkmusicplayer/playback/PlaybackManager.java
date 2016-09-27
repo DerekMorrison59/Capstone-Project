@@ -72,7 +72,7 @@ public class PlaybackManager implements Playback.Callback {
      * Handle a request to play music
      */
     public void handlePlayRequest() {
-        Log.d(TAG, "handlePlayRequest: mState = " + mPlayback.getState());
+//        Log.d(TAG, "handlePlayRequest: mState = " + mPlayback.getState());
 
 
 //        MediaSessionCompat.QueueItem currentMusic = mQueueManager.getCurrentMusic();
@@ -94,7 +94,7 @@ public class PlaybackManager implements Playback.Callback {
      * Handle a request to pause music
      */
     public void handlePauseRequest() {
-        Log.d(TAG, "handlePauseRequest: mState=" + mPlayback.getState());
+//        Log.d(TAG, "handlePauseRequest: mState=" + mPlayback.getState());
         if (mPlayback.isPlaying()) {
             mPlayback.pause();
             mServiceCallback.onPlaybackStop();
@@ -109,7 +109,7 @@ public class PlaybackManager implements Playback.Callback {
      *                  MediaController clients.
      */
     public void handleStopRequest(String withError) {
-        Log.d(TAG, "handleStopRequest: mState=" + mPlayback.getState() + " error= " + withError);
+//        Log.d(TAG, "handleStopRequest: mState=" + mPlayback.getState() + " error= " + withError);
         mPlayback.stop(true);
         mServiceCallback.onPlaybackStop();
         updatePlaybackState(withError);
@@ -122,13 +122,13 @@ public class PlaybackManager implements Playback.Callback {
      * @param error if not null, error message to present to the user.
      */
     public void updatePlaybackState(String error) {
-        Log.d(TAG, "updatePlaybackState, playback state = " + mPlayback.getState());
+//        Log.d(TAG, "updatePlaybackState, playback state = " + mPlayback.getState());
         long position = PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN;
         if (mPlayback != null && mPlayback.isConnected()) {
             position = mPlayback.getCurrentStreamPosition();
         }
 
-        Log.d(TAG, "updatePlaybackState, position = " + position);
+//        Log.d(TAG, "updatePlaybackState, position = " + position);
 
         //noinspection ResourceType
         PlaybackStateCompat.Builder stateBuilder = new PlaybackStateCompat.Builder()
@@ -137,7 +137,7 @@ public class PlaybackManager implements Playback.Callback {
         setCustomAction(stateBuilder);
         int state = mPlayback.getState();
 
-        Log.d(TAG, "updatePlaybackState, state = " + state);
+//        Log.d(TAG, "updatePlaybackState, state = " + state);
 
         // If there is an error message, send it to the playback state:
         if (error != null) {
@@ -158,7 +158,7 @@ public class PlaybackManager implements Playback.Callback {
         MediaDescriptionCompat currentDescription;
 
         if (null != currentSong) {
-            Log.d(TAG, "updatePlaybackState, currentSong title = " + currentSong.getString(MediaMetadataCompat.METADATA_KEY_TITLE));
+//            Log.d(TAG, "updatePlaybackState, currentSong title = " + currentSong.getString(MediaMetadataCompat.METADATA_KEY_TITLE));
             MediaDescriptionCompat.Builder builder = new MediaDescriptionCompat.Builder();
             currentDescription = builder.setMediaId(currentSong.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID))
                     .setTitle(currentSong.getString(MediaMetadataCompat.METADATA_KEY_ARTIST))
@@ -257,7 +257,7 @@ public class PlaybackManager implements Playback.Callback {
 
     @Override
     public void setCurrentMediaId(String mediaId) {
-        Log.d(TAG, "setCurrentMediaId " + mediaId);
+//        Log.d(TAG, "setCurrentMediaId " + mediaId);
         //mQueueManager.setQueueFromMusic(mediaId);
     }
 
@@ -315,7 +315,7 @@ public class PlaybackManager implements Playback.Callback {
     private class MediaSessionCallback extends MediaSessionCompat.Callback {
         @Override
         public void onPlay() {
-            Log.d(TAG, "MediaSessionCompat.Callback onPlay");
+//            Log.d(TAG, "MediaSessionCompat.Callback onPlay");
 //            if (mQueueManager.getCurrentMusic() == null) {
 //                mQueueManager.setRandomQueue();
 //            }
@@ -325,7 +325,7 @@ public class PlaybackManager implements Playback.Callback {
 
         @Override
         public void onSkipToQueueItem(long queueId) {
-            Log.d(TAG, "MediaSessionCompat.Callback OnSkipToQueueItem:" + queueId);
+//            Log.d(TAG, "MediaSessionCompat.Callback OnSkipToQueueItem:" + queueId);
 //            mQueueManager.setCurrentQueueItem(queueId);
             handlePlayRequest();
 //            mQueueManager.updateMetadata();
@@ -333,32 +333,32 @@ public class PlaybackManager implements Playback.Callback {
 
         @Override
         public void onSeekTo(long position) {
-            Log.d(TAG, "MediaSessionCompat.Callback onSeekTo:" + position);
+//            Log.d(TAG, "MediaSessionCompat.Callback onSeekTo:" + position);
             mPlayback.seekTo((int) position);
         }
 
         @Override
         public void onPlayFromMediaId(String mediaId, Bundle extras) {
-            Log.d(TAG, "MediaSessionCompat.Callback playFromMediaId mediaId: " + mediaId + "  extras= " + extras);
+//            Log.d(TAG, "MediaSessionCompat.Callback playFromMediaId mediaId: " + mediaId + "  extras= " + extras);
 //            mQueueManager.setQueueFromMusic(mediaId);
             handlePlayRequest();
         }
 
         @Override
         public void onPause() {
-            Log.d(TAG, "MediaSessionCompat.Callback pause. current state=" + mPlayback.getState());
+//            Log.d(TAG, "MediaSessionCompat.Callback pause. current state=" + mPlayback.getState());
             handlePauseRequest();
         }
 
         @Override
         public void onStop() {
-            Log.d(TAG, "MediaSessionCompat.Callback stop. current state=" + mPlayback.getState());
+//            Log.d(TAG, "MediaSessionCompat.Callback stop. current state=" + mPlayback.getState());
             handleStopRequest(null);
         }
 
         @Override
         public void onSkipToNext() {
-            Log.d(TAG, "MediaSessionCompat.Callback skipToNext");
+//            Log.d(TAG, "MediaSessionCompat.Callback skipToNext");
 /*
             if (mQueueManager.skipQueuePosition(1)) {
                 handlePlayRequest();
@@ -374,7 +374,7 @@ public class PlaybackManager implements Playback.Callback {
 
         @Override
         public void onSkipToPrevious() {
-            Log.d(TAG, "MediaSessionCompat.Callback onSkipToPrevious");
+//            Log.d(TAG, "MediaSessionCompat.Callback onSkipToPrevious");
 /*
             if (mQueueManager.skipQueuePosition(-1)) {
                 handlePlayRequest();
@@ -425,7 +425,7 @@ public class PlaybackManager implements Playback.Callback {
          **/
         @Override
         public void onPlayFromSearch(final String query, final Bundle extras) {
-            Log.d(TAG, "playFromSearch  query= " + query + " extras= " + extras);
+//            Log.d(TAG, "playFromSearch  query= " + query + " extras= " + extras);
 
             mPlayback.setState(PlaybackStateCompat.STATE_CONNECTING);
 /*

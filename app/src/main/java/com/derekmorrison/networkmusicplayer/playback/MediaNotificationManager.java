@@ -187,7 +187,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
                 break;
 */
             default:
-                Log.w(TAG, "Unknown intent ignored. Action=" + action);
+                Log.w(TAG, "onReceive: Unknown intent ignored. Action=" + action);
         }
     }
 
@@ -381,7 +381,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
     private void setNotificationPlaybackState(NotificationCompat.Builder builder) {
         //Log.d(TAG, "updateNotificationPlaybackState. mPlaybackState = " + mPlaybackState);
         if (mPlaybackState == null || !mStarted) {
-            Log.d(TAG, "updateNotificationPlaybackState. cancelling notification!");
+//            Log.d(TAG, "updateNotificationPlaybackState. cancelling notification!");
             mService.stopForeground(true);
             return;
         }
