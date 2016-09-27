@@ -34,12 +34,14 @@
                 android:layout_height="wrap_content"
                 android:text="Title"
                 android:id="@+id/playlist_title"
+                android:contentDescription="@string/song_title"
                 style="@style/TextSongTitle" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Artist"
                 android:id="@+id/playlist_artist"
+                android:contentDescription="@string/song_artist"
                 style="@style/TextSongArtist" />
             </LinearLayout>
 
@@ -47,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/playlistItemMoreMenu"
+            android:contentDescription="@string/more_menu"
             android:src="@drawable/ic_more_vert_black_24dp" />
 
     </LinearLayout>

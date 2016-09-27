@@ -5,15 +5,6 @@
     android:orientation="vertical"
     tools:context="com.derekmorrison.networkmusicplayer.ui.DirectoryFragment">
 
-<!--
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.derekmorrison.networkmusicplayer.ui.BreadCrumbFragment"
-        tools:context="com.derekmorrison.networkmusicplayer.ui.BreadCrumbFragment"
-        android:id="@+id/dir_breadcrumb"
-        />
--->
     <FrameLayout
         android:id="@+id/placeholder_fragment"
         android:layout_width="match_parent"

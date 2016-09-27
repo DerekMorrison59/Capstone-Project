@@ -14,13 +14,9 @@
             android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="new playlist name"
+            android:hint="@string/new_playlist_name"
+            android:contentDescription="@string/new_playlist_name"
             android:inputType="text"
             />
-<!--
-            android:imeOptions="actionDone"
-            android:inputType="textPassword" />
--->
-
     </android.support.design.widget.TextInputLayout>
 </FrameLayout>
