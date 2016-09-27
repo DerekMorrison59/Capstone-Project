@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.derekmorrison.networkmusicplayer.ui.NowPlayingFragment"
-    >
+    tools:context="com.derekmorrison.networkmusicplayer.ui.NowPlayingFragment">
 
     <ImageView
         android:layout_width="match_parent"
@@ -13,63 +12,14 @@
         android:src="@drawable/generic_cover"
         android:id="@+id/albumImageView"
         android:layout_gravity="center_horizontal"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/album_art_image_desc" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Artist"
-                android:id="@+id/artistLabelTV"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="12dp"
-                android:layout_gravity="right"
-                android:layout_marginRight="0dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Title"
-                android:id="@+id/titleLabelTV"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="12dp"
-                android:layout_gravity="right" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Album"
-                android:id="@+id/albumLabelTV"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="12dp"
-                android:layout_gravity="right" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Duration"
-                android:id="@+id/durationLabelTV"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="12dp"
-                android:layout_gravity="right" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -82,9 +32,53 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Artist"
+                android:contentDescription="@string/artist_label_desc"
+                android:id="@+id/artistLabelTV"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="@dimen/now_playing_text_top"
+                android:layout_gravity="right"
+                android:layout_marginRight="0dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Title"
+                android:contentDescription="@string/title_label"
+                android:id="@+id/titleLabelTV"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="@dimen/now_playing_text_top"
+                android:layout_gravity="right" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Album"
+                android:contentDescription="@string/album_label"
+                android:id="@+id/albumLabelTV"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="@dimen/now_playing_text_top"
+                android:layout_gravity="right" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Robert Palmer"
+                android:contentDescription="@string/artist_name"
                 android:id="@+id/artistTV"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/now_playing_text_top"
                 android:layout_marginLeft="16dp"
                 android:maxLines="1" />
 
@@ -92,9 +86,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:contentDescription="@string/song_name_desc"
                 android:text="Looking for Clues"
                 android:id="@+id/titleTV"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/now_playing_text_top"
                 android:layout_marginLeft="16dp"
                 android:maxLines="1" />
 
@@ -103,22 +98,100 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Clues"
+                android:contentDescription="@string/album_name_desc"
                 android:id="@+id/albumTV"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/now_playing_text_top"
                 android:layout_marginLeft="16dp"
                 android:maxLines="1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="4:16"
-                android:id="@+id/durationTV"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="16dp" />
 
         </LinearLayout>
     </LinearLayout>
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp">
+
+        <TextView
+            android:id="@+id/startTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/text_view_start"
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/current_position_desc"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@+id/songSeekBar"
+            android:text="00:00" />
+
+        <SeekBar
+            android:id="@+id/songSeekBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp"
+            android:theme="@style/Theme.AppCompat"
+            android:thumbTint="@color/primary"
+            android:progressTint="@color/primary_dark"
+            android:secondaryProgressTint="@color/primary_light"
+            android:contentDescription="@string/seek_bar"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false" />
+
+        <TextView
+            android:id="@+id/durationTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/text_view_end"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/song_length_desc"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_below="@+id/songSeekBar"
+            android:text="04:31" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="6dp">
+
+        <ImageView
+            android:id="@+id/prev"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_skip_previous_black_48dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/skip_prev"/>
+
+        <ImageView
+            android:id="@+id/play_pause"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:src="@drawable/ic_play_circle_filled_black_48dp"
+            android:contentDescription="@string/play_pause"
+            android:background="?selectableItemBackgroundBorderless"
+            android:tint="@color/primary" />
+
+        <ImageView
+            android:id="@+id/next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_skip_next_black_48dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/skip_next"/>
+
+    </LinearLayout>
 
 </LinearLayout>

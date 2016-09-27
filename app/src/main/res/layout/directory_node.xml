@@ -9,14 +9,24 @@
     android:layout_marginStart="@dimen/node_marginStart"
     android:layout_marginEnd="@dimen/node_marginEnd"
     android:background="#ffffff"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical|right">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:text="Directory Name"
+        android:contentDescription="@string/folder_name_desc"
         android:id="@+id/directoryName"
-        />
+        style="@style/TextSongTitle"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="6dp"
+        android:id="@+id/favImageView"
+        android:src="@drawable/gray_favorite" />
 
 </LinearLayout>

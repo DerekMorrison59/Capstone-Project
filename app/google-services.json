@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "212557695892",
+    "firebase_url": "https://networkmusicplayer-c8125.firebaseio.com",
+    "project_id": "networkmusicplayer-c8125",
+    "storage_bucket": "networkmusicplayer-c8125.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212557695892:android:9f3ea66a1a1bf24b",
+        "android_client_info": {
+          "package_name": "com.derekmorrison.networkmusicplayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212557695892-i5ab8g9cj7rlosj5ipv2cfj0qm39915t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.derekmorrison.networkmusicplayer",
+            "certificate_hash": "6D045755A778C0C06852BC39AACF407133DF6048"
+          }
+        },
+        {
+          "client_id": "212557695892-h2tgkinggvb990s2b1mcib5u48ijm85r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEUcLS4H5JojBWCw5NWfx0pyRHZMihgKA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212557695892-h2tgkinggvb990s2b1mcib5u48ijm85r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

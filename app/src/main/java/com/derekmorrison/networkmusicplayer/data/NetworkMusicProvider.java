@@ -23,6 +23,7 @@ public class NetworkMusicProvider extends ContentProvider {
     static final int SONG = 200;
     static final int PLAYLIST = 300;
     static final int PLAYLIST_ITEM = 400;
+    static final int PLAYLIST_ITEM_SONG = 500;
 
 
     static UriMatcher buildUriMatcher() {
@@ -35,6 +36,7 @@ public class NetworkMusicProvider extends ContentProvider {
         matcher.addURI(authority, NMPContract.PATH_SONG, SONG);
         matcher.addURI(authority, NMPContract.PATH_PLAYLIST, PLAYLIST);
         matcher.addURI(authority, NMPContract.PATH_PLAYLIST_ITEM, PLAYLIST_ITEM);
+        matcher.addURI(authority, NMPContract.PATH_PLAYLIST_ITEM_SONG, PLAYLIST_ITEM_SONG);
 
         return matcher;
     }
@@ -60,6 +62,8 @@ public class NetworkMusicProvider extends ContentProvider {
                 return NMPContract.PlaylistEntry.CONTENT_TYPE;
             case PLAYLIST_ITEM:
                 return NMPContract.PlaylistItemEntry.CONTENT_TYPE;
+            case PLAYLIST_ITEM_SONG:
+                return NMPContract.PLAYLIST_ITEM_CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -122,6 +126,23 @@ public class NetworkMusicProvider extends ContentProvider {
                 break;
             }
 
+            case PLAYLIST_ITEM_SONG: {
+
+                String rawQuery = "SELECT * FROM " + NMPContract.PlaylistItemEntry.TABLE_NAME
+                        + " INNER JOIN " + NMPContract.SongEntry.TABLE_NAME
+                        + " ON " + NMPContract.PlaylistItemEntry.COLUMN_PLAYLIST_ITEM_SONG_ID
+                        + " = " + NMPContract.SongEntry.COLUMN_SONG_ID
+                        + " WHERE " + NMPContract.PlaylistItemEntry.COLUMN_PLAYLIST_LIST_ID + " = "
+                        +  selection;
+
+                final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+                retCursor = db.rawQuery(
+                        rawQuery,
+                        null
+                );
+                break;
+            }
+
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -161,11 +182,21 @@ public class NetworkMusicProvider extends ContentProvider {
                 break;
             }
             case PLAYLIST_ITEM: {
-                long _id = db.insert(NMPContract.PlaylistItemEntry.TABLE_NAME, null, values);
-                if ( _id > 0 )
-                    returnUri = NMPContract.PlaylistItemEntry.buildPlaylistItemUri(_id);
-                else
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
+
+                // do not insert a song into a playlist a second time
+                int song_id = values.getAsInteger(NMPContract.PlaylistItemEntry.COLUMN_PLAYLIST_ITEM_SONG_ID);
+                int playlist_id = values.getAsInteger(NMPContract.PlaylistItemEntry.COLUMN_PLAYLIST_LIST_ID);
+                returnUri = null;
+
+                if (false == songExists(db, playlist_id, song_id)) {
+
+
+                    long _id = db.insert(NMPContract.PlaylistItemEntry.TABLE_NAME, null, values);
+                    if (_id > 0)
+                        returnUri = NMPContract.PlaylistItemEntry.buildPlaylistItemUri(_id);
+                    else
+                        throw new android.database.SQLException("Failed to insert row into " + uri);
+                }
                 break;
             }
             default:
@@ -294,6 +325,33 @@ public class NetworkMusicProvider extends ContentProvider {
         return exists;
     }
 
+    private boolean songExists(SQLiteDatabase db, int playlist_id, int song_id){
+        boolean exists = false;
+
+        String dirColumns = NMPContract.PlaylistItemEntry.COLUMN_PLAYLIST_ITEM_SONG_ID + "=? " +
+                " AND " + NMPContract.PlaylistItemEntry.COLUMN_PLAYLIST_LIST_ID + "=?";
+        String[] dirIds = {String.valueOf(song_id), String.valueOf(playlist_id)};
+        Cursor fileCursor = db.query(
+                NMPContract.PlaylistItemEntry.TABLE_NAME,
+                null,
+                dirColumns,
+                dirIds,
+                null,
+                null,
+                null
+        );
+
+        // todo what if the count is > 1
+        if (null != fileCursor && fileCursor.getCount() > 0) {
+            exists = true;
+        }
+        if (null != fileCursor) {
+            fileCursor.close();
+        }
+
+        return exists;
+    }
+
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
@@ -342,9 +400,14 @@ public class NetworkMusicProvider extends ContentProvider {
                 db.beginTransaction();
                 try {
                     for (ContentValues value : values) {
-                        long _id = db.insert(NMPContract.PlaylistItemEntry.TABLE_NAME, null, value);
-                        if (_id != -1) {
-                            returnCount++;
+                        int song_id = value.getAsInteger(NMPContract.PlaylistItemEntry.COLUMN_PLAYLIST_ITEM_SONG_ID);
+                        int playlist_id = value.getAsInteger(NMPContract.PlaylistItemEntry.COLUMN_PLAYLIST_LIST_ID);
+
+                        if (false == songExists(db, playlist_id, song_id)) {
+                            long _id = db.insert(NMPContract.PlaylistItemEntry.TABLE_NAME, null, value);
+                            if (_id != -1) {
+                                returnCount++;
+                            }
                         }
                     }
                     db.setTransactionSuccessful();

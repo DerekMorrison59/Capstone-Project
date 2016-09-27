@@ -3,6 +3,8 @@
     package="com.derekmorrison.networkmusicplayer">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -12,6 +14,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- This meta-data tag is required to use Google Play Services. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
@@ -23,12 +32,26 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.google.android.gms.ads.AdActivity" />
+
         <provider
             android:name=".data.NetworkMusicProvider"
             android:authorities="com.derekmorrison.networkmusicplayer"
             android:exported="false"
             android:syncable="true" />
 
+        <!-- Enable background dispatching to improve delivery on non-Google Play devices -->
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH"/>
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false"/>
         <service
             android:name=".sync.NetworkQueryService"
             android:exported="false" />
@@ -40,7 +63,23 @@
             android:exported="false" />
         <service
             android:name=".sync.ScanFileService"
-            android:exported="false"></service>
+            android:exported="false" />
+        <service
+            android:name=".ui.SongService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver android:name=".widget.NetworkMusicWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name = "com.derekmorrison.networkmusicplayer.ACTION_METADATA_UPDATED"/>
+                <action android:name = "com.derekmorrison.networkmusicplayer.ACTION_STATE_CHANGED"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/network_music_widget_info" />
+        </receiver>
     </application>
 
 </manifest>

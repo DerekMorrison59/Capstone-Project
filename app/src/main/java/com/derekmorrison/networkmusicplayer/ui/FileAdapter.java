@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.derekmorrison.networkmusicplayer.data.NMPDbHelper;
 public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
     private static final String TAG = "DirectoryAdapter";
     private static ClickListener clickListener;
+    private static MenuClickListener menuClickListener;
     private Cursor mCursor;
     private Context mContext;
     private int mNodeType = NMPDbHelper.NODE_TYPE_FILE;
@@ -31,13 +33,22 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
         void onItemClick(int nodeType, int position, View v);
     }
 
+    public interface MenuClickListener {
+        void onMenuClick(int position, View v);
+    }
+
     public void setOnItemClickListener(ClickListener clickListener) {
         FileAdapter.clickListener = clickListener;
+    }
+
+    public void setOnMenuClickListener(MenuClickListener clickListener) {
+        FileAdapter.menuClickListener = clickListener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView fileView;
         private final LinearLayout fileLayout;
+        private final ImageView menuView;
 
         public ViewHolder(View v) {
             super(v);
@@ -46,6 +57,16 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
 
             fileView = (TextView) v.findViewById(R.id.fileName);
             fileLayout = (LinearLayout) v.findViewById(R.id.fileNodeLayout);
+            menuView = (ImageView) v.findViewById(R.id.fileMoreMenu);
+
+            menuView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if (null != menuClickListener) {
+                        menuClickListener.onMenuClick(getAdapterPosition(), v);
+                    }
+                }
+            });
         }
 
         public TextView getDirectoryView() {

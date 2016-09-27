@@ -1,5 +1,7 @@
 package com.derekmorrison.networkmusicplayer.ui;
 
+import android.support.v4.content.SharedPreferencesCompat;
+
 import com.derekmorrison.networkmusicplayer.data.NMPContract;
 
 /**
@@ -82,4 +84,5 @@ public class DirNode {
     public void setNodeStatus(int nodeStatus) {
         NodeStatus = nodeStatus;
     }
+
 }

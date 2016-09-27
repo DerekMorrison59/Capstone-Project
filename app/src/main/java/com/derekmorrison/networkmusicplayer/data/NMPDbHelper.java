@@ -25,11 +25,11 @@ public class NMPDbHelper extends SQLiteOpenHelper {
 
     // constants that define the Node Status
     public final static int NODE_NOT_SCANNED = 10;
-    public final static int NODE_SCANNING = 20;
+    //public final static int NODE_SCANNING = 20;
     public final static int NODE_SCANNED = 30;
 
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     static final String DATABASE_NAME = "nmp.db";
 
@@ -47,7 +47,8 @@ public class NMPDbHelper extends SQLiteOpenHelper {
                 NodeEntry.COLUMN_NODE_NAME + " TEXT NOT NULL, " +
                 NodeEntry.COLUMN_FILE_PATH + " TEXT NOT NULL, " +
                 NodeEntry.COLUMN_NODE_TYPE + " INTEGER NOT NULL, " +
-                NodeEntry.COLUMN_NODE_STATUS + " INTEGER NOT NULL " +
+                NodeEntry.COLUMN_NODE_STATUS + " INTEGER NOT NULL, " +
+                NodeEntry.COLUMN_NODE_IS_FAV + " INTEGER NOT NULL " +
                 " );";
 
         final String SQL_CREATE_SONG_TABLE = "CREATE TABLE " + SongEntry.TABLE_NAME + " (" +
@@ -64,18 +65,20 @@ public class NMPDbHelper extends SQLiteOpenHelper {
                 SongEntry.COLUMN_SONG_LAST_PLAYED + " INTEGER, " +
                 SongEntry.COLUMN_SONG_PLAY_COUNT + " INTEGER, " +
                 SongEntry.COLUMN_SONG_DEEP_SCAN + " INTEGER, " +
-                SongEntry.COLUMN_SONG_DURATION + " INTEGER " +
+                SongEntry.COLUMN_SONG_DURATION + " INTEGER, " +
+                SongEntry.COLUMN_SONG_YEAR + " INTEGER, " +
+                SongEntry.COLUMN_SONG_IS_FAV + " INTEGER " +
                 " );";
 
         final String SQL_CREATE_PLAYLIST_TABLE = "CREATE TABLE " + PlaylistEntry.TABLE_NAME + " (" +
                 PlaylistEntry._ID + " INTEGER PRIMARY KEY," +
                 PlaylistEntry.COLUMN_PLAYLIST_ID + " INTEGER UNIQUE NOT NULL, " +
-                PlaylistEntry.COLUMN_PLAYLIST_NAME + " TEXT NOT NULL " +
+                PlaylistEntry.COLUMN_PLAYLIST_NAME + " TEXT UNIQUE NOT NULL " +
                 " );";
 
         final String SQL_CREATE_PLAYLIST_ITEM_TABLE = "CREATE TABLE " + PlaylistItemEntry.TABLE_NAME + " (" +
                 PlaylistItemEntry._ID + " INTEGER PRIMARY KEY," +
-                PlaylistItemEntry.COLUMN_PLAYLIST_ITEM_PARENT_ID + " INTEGER UNIQUE NOT NULL, " +
+                PlaylistItemEntry.COLUMN_PLAYLIST_LIST_ID + " INTEGER NOT NULL, " +
                 PlaylistItemEntry.COLUMN_PLAYLIST_ITEM_SONG_ID + " INTEGER NOT NULL " +
                 " );";
 

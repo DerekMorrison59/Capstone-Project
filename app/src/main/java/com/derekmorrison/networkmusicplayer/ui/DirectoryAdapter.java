@@ -1,11 +1,15 @@
 package com.derekmorrison.networkmusicplayer.ui;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,9 +26,15 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
     private Cursor mCursor;
     private Context mContext;
     private int mNodeType = NMPDbHelper.NODE_TYPE_DIRECTORY;
+    private Bitmap mColorFav;
+    private Bitmap mGrayFav;
 
     public DirectoryAdapter(Context context) {
         mContext = context;
+
+        mColorFav = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.color_favorite);
+        mGrayFav = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.gray_favorite);
+
     }
 
     public interface ClickListener {
@@ -38,6 +48,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView dirView;
         private final LinearLayout dirLayout;
+        private final ImageView dirFav;
 
         public ViewHolder(View v) {
             super(v);
@@ -46,10 +57,46 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
 
             dirView = (TextView) v.findViewById(R.id.directoryName);
             dirLayout = (LinearLayout) v.findViewById(R.id.directoryNodeLayout);
+            dirFav = (ImageView) v.findViewById(R.id.favImageView);
+
+            dirFav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //mCursor.moveToPosition(getAdapterPosition());
+                    if (null != mCursor && mCursor.moveToPosition(getAdapterPosition())) {
+
+                        int isFav = mCursor.getInt(NMPContract.NodeEntry.COL_NODE_IS_FAV);
+                        if (1 == isFav) {
+                            // change to NOT fav
+                            isFav = 0;
+                        } else {
+                            // change to favorite
+                            isFav = 1;
+                        }
+
+                        ContentValues values = new ContentValues();
+                        values.put(NMPContract.NodeEntry.COLUMN_NODE_IS_FAV, isFav);
+
+                        int nodeId = mCursor.getInt(NMPContract.NodeEntry.COL_NODE_ID);
+                        String selection = NMPContract.NodeEntry.COLUMN_NODE_ID + "=?";
+                        String[] args = {String.valueOf(nodeId)};
+
+                        mContext.getContentResolver().update(
+                                NMPContract.NodeEntry.CONTENT_URI,
+                                values,
+                                selection,
+                                args
+                        );
+                    }
+                }
+            });
         }
 
         public TextView getDirectoryView() {
             return dirView;
+        }
+        public ImageView getFavImage() {
+            return dirFav;
         }
 
         public LinearLayout getLayoutView() {
@@ -79,9 +126,17 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
         // with that element
         mCursor.moveToPosition(position);
 
-        String serverName = mCursor.getString(NMPContract.NodeEntry.COL_NODE_NAME);
-        viewHolder.getDirectoryView().setText(serverName);
+        String folderName = mCursor.getString(NMPContract.NodeEntry.COL_NODE_NAME);
+        viewHolder.getDirectoryView().setText(folderName);
 
+        int isFav = mCursor.getInt(NMPContract.NodeEntry.COL_NODE_IS_FAV);
+        if (1 == isFav) {
+            // show colored icon
+            viewHolder.getFavImage().setImageBitmap(mColorFav);
+        } else {
+            // show gray icon
+            viewHolder.getFavImage().setImageBitmap(mGrayFav);
+        }
     }
 
     @Override

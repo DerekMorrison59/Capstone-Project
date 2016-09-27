@@ -70,10 +70,12 @@ public class AllServersFragment extends Fragment implements LoaderManager.Loader
                 Log.d(TAG, "onKey" );
                 if( keyCode == KeyEvent.KEYCODE_BACK ){
                     if (KeyEvent.ACTION_DOWN == event.getAction()) {
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        InitialScanFragment fragment = new InitialScanFragment();
-                        transaction.replace(R.id.sample_content_fragment, fragment);
-                        transaction.commit();
+                        MainActivity.setFragment(MainActivity.FRAGMENT_INITIAL_SCAN);
+
+//                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                        InitialScanFragment fragment = new InitialScanFragment();
+//                        transaction.replace(R.id.sample_content_fragment, fragment);
+//                        transaction.commit();
                     }
                     return true;
                 }
@@ -141,10 +143,12 @@ public class AllServersFragment extends Fragment implements LoaderManager.Loader
 
         if (null != dest && dest.getNodeType() == NMPDbHelper.NODE_TYPE_SERVER) {
             // now move to the shares screen
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            ShareFragment fragment = new ShareFragment();
-            transaction.replace(R.id.sample_content_fragment, fragment);
-            transaction.commit();
+            MainActivity.setFragment(MainActivity.FRAGMENT_SHARE);
+
+//            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//            ShareFragment fragment = new ShareFragment();
+//            transaction.replace(R.id.sample_content_fragment, fragment);
+//            transaction.commit();
         } else {
             // todo error - server children should be shares
         }

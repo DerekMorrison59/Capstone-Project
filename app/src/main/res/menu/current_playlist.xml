@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_e_play_playlist"
+        android:title="Play this Playlist"
+        />
+
+    <item
+        android:id="@+id/action_e_copy_playlist"
+        android:title="Copy Songs to Device"
+        />
+
+    <item
+        android:id="@+id/action_e_save_playlist_as"
+        android:title="Save Playlist as..."
+        />
+
+    <item
+        android:id="@+id/action_e_delete_playlist"
+        android:title="Delete Playlist"
+        />
+
+</menu>

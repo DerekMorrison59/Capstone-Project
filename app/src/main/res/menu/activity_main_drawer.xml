@@ -30,23 +30,6 @@
             android:id="@+id/nav_discovery_status"
             android:icon="@drawable/ic_view_list_black_24dp"
             android:title="Discovery Status" />
-        <item
-            android:id="@+id/nav_search"
-            android:icon="@drawable/ic_search_black_24dp"
-            android:title="Search" />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
 
 </menu>

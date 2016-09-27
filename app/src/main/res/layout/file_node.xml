@@ -12,11 +12,19 @@
     android:gravity="center_vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:text="File Name"
         android:id="@+id/fileName"
+        style="@style/TextSongTitle"
         />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/fileMoreMenu"
+        android:src="@drawable/ic_more_vert_black_36dp" />
 
 </LinearLayout>

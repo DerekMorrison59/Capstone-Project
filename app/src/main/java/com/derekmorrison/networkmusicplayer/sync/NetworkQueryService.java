@@ -6,11 +6,15 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContentResolverCompat;
 import android.util.Log;
 
 import com.derekmorrison.networkmusicplayer.data.NMPContract;
 import com.derekmorrison.networkmusicplayer.data.NMPDbHelper;
+import com.derekmorrison.networkmusicplayer.ui.MainActivity;
+import com.derekmorrison.networkmusicplayer.util.SharedPrefUtils;
+import com.derekmorrison.networkmusicplayer.util.Utility;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -41,13 +45,7 @@ public class NetworkQueryService extends IntentService {
     public static final String EXTRA_SCAN_DEPTH = "com.derekmorrison.networkmusicplayer.sync.extra.SCAN_DEPTH";
     public static final String EXTRA_NODE_TYPE = "com.derekmorrison.networkmusicplayer.sync.extra.NODE_TYPE";
 
-    // constants that define the Node Types
-//    public final static int NODE_TYPE_FILE = 10;
-//    public final static int NODE_TYPE_DIRECTORY = 20;
-//    public final static int NODE_TYPE_SHARE = 30;
-//    public final static int NODE_TYPE_SERVER = 40;
-//    public final static int NODE_TYPE_DOMAIN = 50;
-
+    // todo decide if more of these song extenstions should be included
     //private static final String[] audioExt=new String[]{"aif","iff","m3u","m4a","mid","mp3","mpa","ra","wav","wma"};
     private static final String[] audioExt = new String[] {"m4a","mp3"};
 
@@ -100,6 +98,7 @@ public class NetworkQueryService extends IntentService {
                                       int scan_depth, int parent_node_type) {
 
         Log.d(LOG_TAG, "handleActionScanNode for path: " + parent_node_path);
+
         Date scanStartTime = new Date();
 
         final String nDomain = "";
@@ -147,15 +146,20 @@ public class NetworkQueryService extends IntentService {
         }catch (SmbException e) {
             // TODO Auto-generated catch block
 
-            Log.d(LOG_TAG, "** $$ !! count not read directory: " + directory.getName());
+            Log.d(LOG_TAG, "** $$ !! can not read directory: " + directory.getName());
+            SharedPrefUtils.getInstance().incrementScanEnds();
 
-            e.printStackTrace();
+            //e.printStackTrace();
             //children = null;
             return;
         }
 
         // todo do something with the start and end scan times
         Date scanEndTime = new Date();
+        if (1 == scan_depth) {
+            SharedPrefUtils.getInstance().incrementScanEnds();
+        }
+
 
         // update the parentNodeId record and mark it as 'scanned' because the children were retrieved
 
@@ -207,6 +211,7 @@ public class NetworkQueryService extends IntentService {
                         dirValues.put(NMPContract.NodeEntry.COLUMN_FILE_PATH, children[i].getPath());
                         dirValues.put(NMPContract.NodeEntry.COLUMN_NODE_TYPE, nodeType);
                         dirValues.put(NMPContract.NodeEntry.COLUMN_NODE_STATUS, nodeStatus);
+                        dirValues.put(NMPContract.NodeEntry.COLUMN_NODE_IS_FAV, 0);
 
                         newDirectories.add(dirValues);
 
@@ -220,9 +225,11 @@ public class NetworkQueryService extends IntentService {
                             fileValues.put(NMPContract.SongEntry.COLUMN_PARENT_ID, parent_node_id);
                             fileValues.put(NMPContract.SongEntry.COLUMN_SONG_ID, children[i].getPath().hashCode());
                             fileValues.put(NMPContract.SongEntry.COLUMN_FILE_NAME, filename);
+                            fileValues.put(NMPContract.SongEntry.COLUMN_SONG_TRACK, 0);         // there is no image ID
                             fileValues.put(NMPContract.SongEntry.COLUMN_SONG_LAST_PLAYED, 0);   // just added == no last play
                             fileValues.put(NMPContract.SongEntry.COLUMN_SONG_PLAY_COUNT, 0);    // just added == never played
                             fileValues.put(NMPContract.SongEntry.COLUMN_SONG_DEEP_SCAN, 0);     // 0 == false
+                            fileValues.put(NMPContract.SongEntry.COLUMN_SONG_IS_FAV, 0);        // 0 == false
 
                             newFiles.add(fileValues);
                         }
@@ -231,7 +238,7 @@ public class NetworkQueryService extends IntentService {
                     e.printStackTrace();
                 }
 
-                // todo post an update containing node name, path, musicFilesFound, dirsFound, start and end times
+                // todo post an update containing start and end times
 
             }
 
@@ -261,6 +268,7 @@ public class NetworkQueryService extends IntentService {
 
                     NetworkQueryHelperService.startActionScanChildren(mContext, parent_node_id,
                             scan_depth, getChildNodeType(parent_node_type));
+
                 }
             }
         }

@@ -1,0 +1,200 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.derekmorrison.networkmusicplayer.ui.NowPlayingFragment">
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="fill_parent"
+        android:src="@drawable/generic_cover"
+        android:id="@+id/albumImageView"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/album_art_image_desc" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Artist"
+                android:id="@+id/artistLabelTV"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="0dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Title"
+                android:id="@+id/titleLabelTV"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="right" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Album"
+                android:id="@+id/albumLabelTV"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="right" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Robert Palmer"
+                android:id="@+id/artistTV"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="16dp"
+                android:maxLines="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Looking for Clues"
+                android:id="@+id/titleTV"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="16dp"
+                android:maxLines="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Clues"
+                android:id="@+id/albumTV"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="16dp"
+                android:maxLines="1" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_above="@+id/land_controls">
+
+        <TextView
+            android:id="@+id/startTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/text_view_start"
+            android:layout_alignParentStart="true"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentBottom="true" />
+
+        <SeekBar
+            android:id="@+id/songSeekBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:theme="@style/Theme.AppCompat"
+            android:thumbTint="@color/primary"
+            android:progressTint="@color/primary_dark"
+            android:secondaryProgressTint="@color/primary_light"
+            android:contentDescription="@string/seek_bar"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false" />
+
+        <TextView
+            android:id="@+id/durationTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/text_view_end"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:layout_alignWithParentIfMissing="false"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="6dp"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/land_controls">
+
+        <ImageView
+            android:id="@+id/prev"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_skip_previous_black_48dp"
+            android:contentDescription="@string/skip_prev"/>
+
+        <!--android:background="?selectableItemBackgroundBorderless"-->
+
+        <ImageView
+            android:id="@+id/play_pause"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:src="@drawable/ic_play_circle_filled_black_48dp"
+            android:contentDescription="@string/play_pause"
+            android:tint="@color/primary" />
+
+        <!--android:background="?selectableItemBackgroundBorderless"-->
+
+        <ImageView
+            android:id="@+id/next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_skip_next_black_48dp"
+            android:contentDescription="@string/skip_next"/>
+
+        <!--android:background="?selectableItemBackgroundBorderless"-->
+
+    </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

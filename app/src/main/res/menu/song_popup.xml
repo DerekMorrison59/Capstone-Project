@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/play_now"
+        android:title="Play Now"
+        />
+    <item
+        android:id="@+id/add_to_playlist"
+        android:title="Add to Playlist"
+        />
+    <item
+        android:id="@+id/add_to_new_playlist"
+        android:title="Add to New Playlist"
+        />
+    <item
+        android:id="@+id/add_all_to_playlist"
+        android:title="Add all to Playlist"
+        />
+    <item
+        android:id="@+id/copy_to_local"
+        android:title="Copy to Local"
+        />
+
+</menu>

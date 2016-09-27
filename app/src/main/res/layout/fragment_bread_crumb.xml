@@ -1,0 +1,24 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.derekmorrison.networkmusicplayer.ui.BreadCrumbFragment"
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/bread_crumb_list"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/primary_dark"
+        android:foregroundGravity="center_vertical" />
+
+<!--
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/secondary_text"
+        android:layout_gravity="bottom" />
+-->
+
+</FrameLayout>

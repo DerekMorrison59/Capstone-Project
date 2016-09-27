@@ -12,6 +12,9 @@ import android.widget.Button;
 import com.derekmorrison.networkmusicplayer.R;
 import com.derekmorrison.networkmusicplayer.data.NMPDbHelper;
 import com.derekmorrison.networkmusicplayer.sync.NetworkQueryService;
+import com.derekmorrison.networkmusicplayer.util.SharedPrefUtils;
+
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,16 +42,12 @@ public class OnboardingFragment extends Fragment {
                 NetworkQueryService.startActionScanNode(getContext(),
                         0, "smb://", ONBOARDING_SCAN_DEPTH, NMPDbHelper.NODE_TYPE_START);
 
-
-
-
+                //setScanStartTime
+                Date now = new Date();
+                SharedPrefUtils.getInstance().setScanStartTime(now.getTime());
 
                 // switch to the Initial Network Scan fragment
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                InitialScanFragment fragment = new InitialScanFragment();
-                transaction.replace(R.id.sample_content_fragment, fragment);
-                transaction.commit();
-
+                MainActivity.setFragment(MainActivity.FRAGMENT_INITIAL_SCAN);
             }
         });
 

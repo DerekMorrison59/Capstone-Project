@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.derekmorrison.networkmusicplayer.data.NMPContract;
 import com.derekmorrison.networkmusicplayer.data.NMPDbHelper;
+import com.derekmorrison.networkmusicplayer.util.SharedPrefUtils;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -82,6 +83,11 @@ public class NetworkQueryHelperService extends IntentService {
         if (null != directoryCursor && directoryCursor.getCount() > 0) {
             while(directoryCursor.moveToNext()) {
 
+                // if this is the final scan then count it
+                if (1 == scan_depth) {
+                    SharedPrefUtils.getInstance().incrementScanStarts();
+                }
+
                 // only request a scan if the directory has not been scanned before
 //                if (NMPDbHelper.NODE_NOT_SCANNED == directoryCursor.getInt(NMPContract.NodeEntry.COL_NODE_STATUS)) {
                     NetworkQueryService.startActionScanNode(mContext,
@@ -91,7 +97,7 @@ public class NetworkQueryHelperService extends IntentService {
 
 //                }
             }
-            }
+        }
 
         if (null != directoryCursor) {
             directoryCursor.close();

@@ -5,6 +5,20 @@
     android:orientation="vertical"
     tools:context="com.derekmorrison.networkmusicplayer.ui.DirectoryFragment">
 
+<!--
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.derekmorrison.networkmusicplayer.ui.BreadCrumbFragment"
+        tools:context="com.derekmorrison.networkmusicplayer.ui.BreadCrumbFragment"
+        android:id="@+id/dir_breadcrumb"
+        />
+-->
+    <FrameLayout
+        android:id="@+id/placeholder_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -17,6 +31,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/folders_rb_label"
+            android:contentDescription="@string/folders_tab"
             android:layout_weight="1"
             android:id="@+id/folderButton"
             android:button="@android:color/transparent"
@@ -29,6 +44,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/songs_rb_label"
+            android:contentDescription="@string/songs_tab_desc"
             android:id="@+id/songButton"
             android:button="@android:color/transparent"
             android:layout_gravity="center"
