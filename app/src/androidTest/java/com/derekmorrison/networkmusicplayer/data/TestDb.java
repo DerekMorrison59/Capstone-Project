@@ -85,7 +85,7 @@ public class TestDb extends AndroidTestCase {
         assertTrue("Error: Your database was created without all 4 entry tables",
                 tableNameHashSet.isEmpty());
 
-        // now, do our tables contain the correct columns?
+        // now, does the 'Node' table contain the correct columns?
         c = db.rawQuery("PRAGMA table_info(" + NMPContract.NodeEntry.TABLE_NAME + ")",
                 null);
 
@@ -101,6 +101,8 @@ public class TestDb extends AndroidTestCase {
         nodeColumnHashSet.add(NMPContract.NodeEntry.COLUMN_NODE_TYPE);
         nodeColumnHashSet.add(NMPContract.NodeEntry.COLUMN_NODE_STATUS);
         nodeColumnHashSet.add(NMPContract.NodeEntry.COLUMN_PARENT_ID);
+        nodeColumnHashSet.add(NMPContract.NodeEntry.COLUMN_NODE_IS_FAV);
+
 
         int columnNameIndex = c.getColumnIndex("name");
         do {
@@ -151,6 +153,7 @@ public class TestDb extends AndroidTestCase {
             String filePath = fileCursor.getString(NMPContract.NodeEntry.COL_FILE_PATH);
             int node_type = fileCursor.getInt(NMPContract.NodeEntry.COL_NODE_TYPE);
             int node_status = fileCursor.getInt(NMPContract.NodeEntry.COL_NODE_STATUS);
+            int node_is_fav = fileCursor.getInt(NMPContract.NodeEntry.COL_NODE_IS_FAV);
         }
 
         // Move the cursor to the first valid database row and check to see if we have any rows
