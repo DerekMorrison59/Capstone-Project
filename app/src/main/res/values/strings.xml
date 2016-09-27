@@ -6,13 +6,82 @@
 
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome">Welcome to Network Music Player!</string>
     <string name="onboarding_instructions">Tap the button below to search your network for shared folders</string>
     <string name="start_button">START</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--<string name="hello_blank_fragment">Hello blank fragment</string>-->
+
     <string name="folders_rb_label">FOLDERS</string>
     <string name="songs_rb_label">SONGS</string>
+
+    <string name="song_service_started">Network Music Player Running</string>
+    <string name="song_service_stopped">Network Music Player Stopped</string>
+    <string name="song_service_label">Network Music Player</string>
+    <string name="local_service_connected">SongService Connected</string>
+    <string name="local_service_disconnected">SongService Disconnected</string>
+
+    <string name="seek_bar">seek bar</string>
+    <string name="play_pause">play or pause</string>
+    <string name="skip_next">skip to next</string>
+    <string name="skip_prev">skip to previous</string>
+    <string name="album_art_image_desc">Album Art Image</string>
+
+    <!--<string name="hello_blank_fragment">Hello blank fragment</string>-->
+    <string name="album_artwork">Album Artwork</string>
+
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">CANCEL</string>
+    <string name="browse_servers">BROWSE SERVERS</string>
+
+    <string name="label_pause">Pause</string>
+    <string name="label_play">Play</string>
+    <string name="label_previous">Previous</string>
+    <string name="label_next">Next</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="song_title_description">Song Title</string>
+    <string name="artist_name_description">Artist Name</string>
+
+    <string name="BANNER_ID">BuildConfig.BANNER_AD_UNIT_ID</string>
+    <string name="DEVICE_ID">BuildConfig.DEVICE_ID</string>
+    <string name="more_menu">More Menu</string>
+    <string name="playlist_name">Playlist Name</string>
+    <string name="welcome_message">Welcome Message</string>
+    <string name="instructions_tap_to_start">Instructions - Tap to Start</string>
+    <string name="start_button_desc">Start Button</string>
+    <string name="app_bar_desc">App Bar</string>
+    <string name="navigation_view">Navigation View</string>
+    <string name="bread_crumb_item">Bread Crumb Folder</string>
+    <string name="confirm_delete_playlist">Confirm Delete Playlist</string>
+    <string name="artist_label_desc">Artist</string>
+    <string name="title_label">Title Label</string>
+    <string name="album_label">Album label</string>
+    <string name="artist_name">Artist Name</string>
+    <string name="song_name_desc">Song Name</string>
+    <string name="album_name_desc">Album Name</string>
+    <string name="current_position_desc">Current Position</string>
+    <string name="song_length_desc">Song Length</string>
+    <string name="folder_name_desc">Folder Name</string>
+    <string name="folders_tab">Folders Tab</string>
+    <string name="songs_tab_desc">Songs Tab</string>
+    <string name="domains">Domains</string>
+    <string name="servers">Servers</string>
+    <string name="shares">Shares</string>
+    <string name="folders">Folders</string>
+    <string name="music_files">Music Files</string>
+    <string name="scan_depth">Scan Depth</string>
+    <string name="scan_start_time">Scan Start Time</string>
+    <string name="scan_end_time">Scan End Time</string>
+    <string name="time_scan_ended">Time Scan Ended</string>
+    <string name="time_scan_started">Time Scan Started</string>
+    <string name="folder_levels_scanned">Folder Levels Scanned</string>
+    <string name="total_songs_found">Total Songs Found</string>
+    <string name="total_folders_found">Total Folders Found</string>
+    <string name="total_shares_found">Total Shares Found</string>
+    <string name="servers_found">Servers Found</string>
+    <string name="domains_found">Domains Found</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

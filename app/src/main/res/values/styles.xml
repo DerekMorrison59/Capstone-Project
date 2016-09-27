@@ -18,6 +18,30 @@
     <style name="TabLabel">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/tab_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextSongTitle">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextSongArtist">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/subtitle_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextSongTitleWidget">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/text_widget_title</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextSongArtistWidget">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/text_widget_subtitle</item>
         <item name="android:textSize">14sp</item>
     </style>
 

@@ -11,4 +11,15 @@
     <dimen name="node_marginTop">6dp</dimen>
     <dimen name="node_marginStart">6dp</dimen>
     <dimen name="node_marginEnd">6dp</dimen>
+
+    <dimen name="text_view_start">16dp</dimen>
+    <dimen name="text_view_end">16dp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="now_playing_text_top">6dp</dimen>
+    <dimen name="land_padding">128dp</dimen>
 </resources>
