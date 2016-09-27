@@ -36,6 +36,7 @@ public class NetworkMusicWidget extends AppWidgetProvider {
     private static Bitmap mPlayDrawable;
     private static String pkg;
     private int mState = -13;
+    private boolean mSetupComplete = false;
 
     private static PendingIntent mPauseIntent;
     private static PendingIntent mPlayIntent;
@@ -52,6 +53,8 @@ public class NetworkMusicWidget extends AppWidgetProvider {
 
     void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
+
+        if (false == mSetupComplete) { setup(context); }
 
         GlobalApp globalApp = (GlobalApp) GlobalApp.getContext();
         MediaMetadataCompat song = globalApp.getSongList().getCurrentSong();
@@ -116,9 +119,7 @@ public class NetworkMusicWidget extends AppWidgetProvider {
         }
     }
 
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        //Log.d(TAG, "UUUUUUUUUUUUUUUUUUUUU       onUpdate  ");
+    private void setup(Context context) {
         mPauseDrawable = BitmapFactory.decodeResource(context.getResources(), R.drawable.uamp_ic_pause_white_24dp);
         mPlayDrawable = BitmapFactory.decodeResource(context.getResources(), R.drawable.uamp_ic_play_arrow_white_24dp);
 
@@ -135,7 +136,12 @@ public class NetworkMusicWidget extends AppWidgetProvider {
 
         Intent mainAppIntent = new Intent(context, MainActivity.class);
         mLaunchApp = PendingIntent.getActivity(context, 98, mainAppIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        mSetupComplete = true;
+    }
 
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        //Log.d(TAG, "UUUUUUUUUUUUUUUUUUUUU       onUpdate  ");
     }
 
     @Override
