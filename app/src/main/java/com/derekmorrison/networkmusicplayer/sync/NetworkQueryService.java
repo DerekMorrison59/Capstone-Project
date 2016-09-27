@@ -30,8 +30,6 @@ import jcifs.smb.SmbFile;
  * An {@link IntentService} subclass for handling asynchronous task requests in
  * a service on a separate handler thread.
  * <p/>
- * TODO: Customize class - update intent actions, extra parameters and static
- * helper methods.
  */
 public class NetworkQueryService extends IntentService {
 
@@ -51,19 +49,15 @@ public class NetworkQueryService extends IntentService {
 
     public NetworkQueryService() {
         super("NetworkQueryService");
-        Log.d(LOG_TAG, "NetworkQueryService Constructor");
+//        Log.d(LOG_TAG, "NetworkQueryService Constructor");
     }
 
     /**
-     * Starts this service to perform action ScanNode with the given parameters. If
-     * the service is already performing a task this action will be queued.
-     *
-     * @see IntentService
+     * startActionScanNode uses the 'node_id' as the parent node and scans the network
+     * to find all child nodes. Each child is evaluated, directories and music files are
+     * added to the database. The parameter 'scan_depth' indicates how many levels of the
+     * directory tree should be scanned below the current one
      */
-    // startActionScanNode uses the 'node_id' as the parent node and scans the network
-    // to find all child nodes. Each child is evaluated, directories and music files are
-    // added to the database. The parameter 'scan_depth' indicates how many levels of the
-    // directory tree should be scanned below the current one
     public static void startActionScanNode(Context context, int node_id, String node_path,
                                            int scan_depth, int node_type) {
         mContext = context;
@@ -97,7 +91,7 @@ public class NetworkQueryService extends IntentService {
     private void handleActionScanNode(int parent_node_id, String parent_node_path,
                                       int scan_depth, int parent_node_type) {
 
-        Log.d(LOG_TAG, "handleActionScanNode for path: " + parent_node_path);
+//        Log.d(LOG_TAG, "handleActionScanNode for path: " + parent_node_path);
 
         Date scanStartTime = new Date();
 
@@ -136,17 +130,17 @@ public class NetworkQueryService extends IntentService {
         // the directory exists, now request the child nodes
         try {
             Date date = new Date();
-            Log.d(LOG_TAG, "about to call for children: " + date.toString());
+//            Log.d(LOG_TAG, "about to call for children: " + date.toString());
 
             children = directory.listFiles();
 
             date = new Date();
-            Log.d(LOG_TAG, "finished call for children: " + date.toString());
+//            Log.d(LOG_TAG, "finished call for children: " + date.toString());
 
         }catch (SmbException e) {
             // TODO Auto-generated catch block
 
-            Log.d(LOG_TAG, "** $$ !! can not read directory: " + directory.getName());
+//            Log.d(LOG_TAG, "** $$ !! can not read directory: " + directory.getName());
             SharedPrefUtils.getInstance().incrementScanEnds();
 
             //e.printStackTrace();
@@ -160,10 +154,7 @@ public class NetworkQueryService extends IntentService {
             SharedPrefUtils.getInstance().incrementScanEnds();
         }
 
-
         // update the parentNodeId record and mark it as 'scanned' because the children were retrieved
-
-        // specify the column to use
         String nodeColumns = NMPContract.NodeEntry.COLUMN_NODE_ID + " = ? ";
 
         // specify the node ID
@@ -190,16 +181,17 @@ public class NetworkQueryService extends IntentService {
             int nodeType = NMPDbHelper.NODE_TYPE_FILE;
             int nodeStatus = 0;
 
+            // each directory may contain more directories and / or files
             List<ContentValues> newDirectories = new ArrayList<ContentValues>();
             List<ContentValues> newFiles = new ArrayList<ContentValues>();
 
-
+            // check each child to see if it is a directory or file
             for (int i = 0; i < childrenFound; i++) {
                 try {
                     String filename = children[i].getName();
 
                     if (true == children[i].isDirectory()) {
-                        Log.d(LOG_TAG, "found directory: " + filename);
+//                        Log.d(LOG_TAG, "found directory: " + filename);
 
                         nodeType = getChildNodeType(parent_node_type);
                         nodeStatus = NMPDbHelper.NODE_NOT_SCANNED;
@@ -220,7 +212,7 @@ public class NetworkQueryService extends IntentService {
                         String extension = getExtension(filename);
 
                         if (extension.equals("mp3") || extension.equals("m4a")) {
-                            Log.d(LOG_TAG, "found song: " + filename);
+//                            Log.d(LOG_TAG, "found song: " + filename);
                             ContentValues fileValues = new ContentValues();
                             fileValues.put(NMPContract.SongEntry.COLUMN_PARENT_ID, parent_node_id);
                             fileValues.put(NMPContract.SongEntry.COLUMN_SONG_ID, children[i].getPath().hashCode());
@@ -242,14 +234,13 @@ public class NetworkQueryService extends IntentService {
 
             }
 
-            // todo  figure out when all scans have completed
             // add new song files to the database
             int fileCount = newFiles.size();
             if (fileCount > 0){
                 ContentValues[] fileArray = new ContentValues[fileCount];
                 fileArray = newFiles.toArray(fileArray);
                 getContentResolver().bulkInsert(NMPContract.SongEntry.CONTENT_URI, fileArray);
-                Log.d(LOG_TAG, "Songs added to the database: " + fileCount);
+//                Log.d(LOG_TAG, "Songs added to the database: " + fileCount);
             }
 
             // add new directories to the database
@@ -258,13 +249,13 @@ public class NetworkQueryService extends IntentService {
                 ContentValues[] directoryArray = new ContentValues[directoryCount];
                 directoryArray = newDirectories.toArray(directoryArray);
                 getContentResolver().bulkInsert(NMPContract.NodeEntry.CONTENT_URI, directoryArray);
-                Log.d(LOG_TAG, "Directories added to the database: " + directoryCount);
+//                Log.d(LOG_TAG, "Directories added to the database: " + directoryCount);
 
                 // now check to see if the scanning should continue to the child directories
                 scan_depth--;
                 // if levels to go > 0 then send intent to the follow-up service with parentNodeId for the parent
                 if (scan_depth > 0) {
-                    Log.d(LOG_TAG, "scan_depth: " + scan_depth);
+//                    Log.d(LOG_TAG, "scan_depth: " + scan_depth);
 
                     NetworkQueryHelperService.startActionScanChildren(mContext, parent_node_id,
                             scan_depth, getChildNodeType(parent_node_type));

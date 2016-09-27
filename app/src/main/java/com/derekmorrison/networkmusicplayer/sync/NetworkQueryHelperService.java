@@ -14,8 +14,7 @@ import com.derekmorrison.networkmusicplayer.util.SharedPrefUtils;
  * An {@link IntentService} subclass for handling asynchronous task requests in
  * a service on a separate handler thread.
  * <p/>
- * helper methods.
- */
+  */
 public class NetworkQueryHelperService extends IntentService {
 
     private static Context mContext;
@@ -26,13 +25,6 @@ public class NetworkQueryHelperService extends IntentService {
         super("NetworkQueryHelperService");
     }
 
-    /**
-     * Starts this service to perform action Foo with the given parameters. If
-     * the service is already performing a task this action will be queued.
-     *
-     * @see IntentService
-     */
-    // TODO: Customize helper method
     public static void startActionScanChildren(Context context, int node_id,
                                                int scan_depth, int node_type) {
         mContext = context;
@@ -59,11 +51,9 @@ public class NetworkQueryHelperService extends IntentService {
     }
 
     /**
-     * Handle action Foo in the provided background thread with the provided
-     * parameters.
+     * Request a directory scan for each directory found in this directory
      */
     private void handleActionScanChildren(int parent_node_id, int scan_depth, int node_type) {
-
 
         // get all the child directories of the node passed in
         Cursor directoryCursor = null;
@@ -101,6 +91,7 @@ public class NetworkQueryHelperService extends IntentService {
 
         if (null != directoryCursor) {
             directoryCursor.close();
+            directoryCursor = null;
         }
     }
 }
