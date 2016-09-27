@@ -56,7 +56,7 @@ public class SharedPrefUtils {
 
         // check for the highest playlist Id in the database
         if (-1 == playlistId) {
-            Log.d(LOG, "getNextPlaylistId - no ID stored in Shared Prefs");
+//            Log.d(LOG, "getNextPlaylistId - no ID stored in Shared Prefs");
 
             String[] max = {" MAX(" + NMPContract.PlaylistEntry.COLUMN_PLAYLIST_ID + ") "};
 
@@ -74,7 +74,7 @@ public class SharedPrefUtils {
             if (null != directoryCursor && directoryCursor.getCount() > 0 && directoryCursor.moveToFirst()) {
                 // the result is a single value - 1 row & 1 column
                 playlistId = directoryCursor.getInt(0);
-                Log.d(LOG, "getNextPlaylistId - the highest PLAYLIST_ID found: " + playlistId);
+//                Log.d(LOG, "getNextPlaylistId - the highest PLAYLIST_ID found: " + playlistId);
             }
 
             // move to the next available ID number
@@ -92,7 +92,7 @@ public class SharedPrefUtils {
         editor.putInt(NEXT_PLAYLIST_ID, playlistId+1);
         editor.apply();
 
-        Log.d(LOG, "getNextPlaylistId - PLAYLIST_ID returned: " + playlistId);
+//        Log.d(LOG, "getNextPlaylistId - PLAYLIST_ID returned: " + playlistId);
 
         return playlistId;
     }

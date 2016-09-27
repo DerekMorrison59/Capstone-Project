@@ -1,19 +1,12 @@
 package com.derekmorrison.networkmusicplayer.util;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.v4.media.MediaMetadataCompat;
 import android.util.Log;
 
 import com.derekmorrison.networkmusicplayer.data.NMPContract;
 import com.derekmorrison.networkmusicplayer.sync.CopyFileService;
-import com.derekmorrison.networkmusicplayer.sync.ScanFileService;
-import com.derekmorrison.networkmusicplayer.ui.GlobalApp;
-
-import java.io.File;
 
 /**
  * Created by Derek on 9/3/2016.
@@ -43,14 +36,14 @@ public class SongListHelper {
         // just call CopyFileService and pass the listId so that ScanFileService knows where to put the results
         if (null != songCursor && songCursor.moveToFirst()) {
 
-            Log.d(TAG, "getMetadataForId - found song in Db");
+//            Log.d(TAG, "getMetadataForId - found song in Db");
 
             String fileName = songCursor.getString(NMPContract.SongEntry.COL_FILE_NAME);
 
             int deepScan = songCursor.getInt(NMPContract.SongEntry.COL_SONG_DEEP_SCAN);
 
             if (1 == deepScan) {
-                Log.d(TAG, "getMetadataForId - song already Deep Scanned: " + fileName);
+//                Log.d(TAG, "getMetadataForId - song already Deep Scanned: " + fileName);
                 return;
             }
 
@@ -74,7 +67,7 @@ public class SongListHelper {
             if (null != nodeCursor && nodeCursor.moveToFirst()) {
                 String path = nodeCursor.getString(NMPContract.NodeEntry.COL_FILE_PATH);
                 CopyFileService.startCopyFile(context, songDbId, path + fileName, listId);
-                Log.d(TAG, "getMetadataForId - found parent in Db: " + path + fileName);
+//                Log.d(TAG, "getMetadataForId - found parent in Db: " + path + fileName);
             }
 
 

@@ -80,7 +80,7 @@ public class Playlist {
     // adds new songId to the Playlist and returns it's position
     // does not allow duplicate songId entries
     public int addSong(int songId, String artist, String title, int albumId, Context context) {
-        Log.d(TAG, "addSong song ID: " + songId + " artist: " + artist + " title: " + title);
+//        Log.d(TAG, "addSong song ID: " + songId + " artist: " + artist + " title: " + title);
 
         // do not allow a duplicate
         if (false == mListMember.contains(songId)) {
@@ -106,7 +106,7 @@ public class Playlist {
     }
 
     public void loadFromDb(Context context, int playlistId) {
-        Log.d(TAG, "loadFromDb playlist ID: " + playlistId);
+//        Log.d(TAG, "loadFromDb playlist ID: " + playlistId);
 
         // get the songs in this playlist
         String selection = NMPContract.PlaylistEntry.COLUMN_PLAYLIST_ID + "=?";
@@ -124,7 +124,7 @@ public class Playlist {
         if (null != playlistCursor && true == playlistCursor.moveToFirst()) {
             playlistName = playlistCursor.getString(NMPContract.PlaylistEntry.COL_PLAYLIST_NAME);
         }
-        Log.d(TAG, "loadFromDb playlist Name: " + playlistName);
+//        Log.d(TAG, "loadFromDb playlist Name: " + playlistName);
 
         playlistCursor.close();
         playlistCursor = null;
@@ -137,11 +137,11 @@ public class Playlist {
         mPlaylistName = playlistName;
 
         if (true == dbLoaded) {
-            Log.d(TAG, "loadFromDb already loaded! ! !");
+//            Log.d(TAG, "loadFromDb already loaded! ! !");
             return;
         }
 
-        Log.d(TAG, "loadFromDb playlist ID: " + playlistId + " name: " + playlistName);
+//        Log.d(TAG, "loadFromDb playlist ID: " + playlistId + " name: " + playlistName);
 
         // get the songs in this playlist
         String selection = NMPContract.PlaylistItemEntry.COLUMN_PLAYLIST_LIST_ID + "=?";
@@ -166,7 +166,7 @@ public class Playlist {
             SongNode s = new SongNode();
             s.setId(songDbId);
             mListMember.add(s);
-            Log.d(TAG, "loadFromDb - retrieved songDbId: " + songDbId);
+//            Log.d(TAG, "loadFromDb - retrieved songDbId: " + songDbId);
         }
 
         loadDetailsFromDb(context);
@@ -195,7 +195,7 @@ public class Playlist {
         ContentValues listValues = new ContentValues();
         listValues.put(NMPContract.PlaylistEntry.COLUMN_PLAYLIST_NAME, mPlaylistName);
 
-        Log.d(TAG, "saveToDb - Trying to update PlayListEntry with new NAME: " + mPlaylistName);
+//        Log.d(TAG, "saveToDb - Trying to update PlayListEntry with new NAME: " + mPlaylistName);
 
         if (null != idCursor && idCursor.moveToFirst() ) {
             // the playlist exists and must be updated to ensure the name is correct
@@ -247,7 +247,7 @@ public class Playlist {
                     NMPContract.PlaylistItemEntry.CONTENT_URI,
                     songArray
             );
-            Log.d(TAG, "Saved Playlist: " + mPlaylistName + " songs contained: " + songCount);
+//            Log.d(TAG, "Saved Playlist: " + mPlaylistName + " songs contained: " + songCount);
         }
 
     }
@@ -291,7 +291,7 @@ public class Playlist {
                 songNode.setArtUrl(songCursor.getString(NMPContract.SongEntry.COL_SONG_ART_URL));
                 songNode.setDeepScan(songCursor.getInt(NMPContract.SongEntry.COL_SONG_DEEP_SCAN));
 
-                Log.d(TAG, "loadDetailsFromDb adding song: " + title + " by: " + artist);
+//                Log.d(TAG, "loadDetailsFromDb adding song: " + title + " by: " + artist);
 
                 songCursor.close();
             } else {

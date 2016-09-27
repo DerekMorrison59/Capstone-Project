@@ -350,7 +350,7 @@ public class SongList {
         if (null != songCursor && songCursor.moveToFirst()) {
             String filename = songCursor.getString(SongEntry.COL_FILE_NAME);
             if (false == fileOnDevice(filename)) {
-                Log.d(TAG, "checkNextSong  song not on device: calling getMetadataForId ");
+//                Log.d(TAG, "checkNextSong  song not on device: calling getMetadataForId ");
                 SongListHelper helper = new SongListHelper();
                 helper.getMetadataForId(mContext, songDbId, SongListHelper.SONG_LIST_CURRENT);
             }
