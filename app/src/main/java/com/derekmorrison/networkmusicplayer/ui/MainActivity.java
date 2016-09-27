@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -255,6 +256,13 @@ public class MainActivity extends AppCompatActivity
                 mLastScreen = FRAGMENT_DIRECTORY;
             }
             setFragment(mLastScreen);
+
+            if (isTablet(getApplicationContext())) {
+                FragmentTransaction tx = mSupportFragmentManager.beginTransaction();
+                NowPlayingFragment fragment = new NowPlayingFragment();
+                tx.replace(R.id.right_side_fragment, fragment, TAG_NOW_PLAYING);
+                tx.commit();
+            }
         }
 
 /*
@@ -339,16 +347,24 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction transaction = mSupportFragmentManager.beginTransaction();
 
         if (FRAGMENT_NOW_PLAYING == newFragment) {
-            NowPlayingFragment fragment = (NowPlayingFragment) mSupportFragmentManager.findFragmentByTag(TAG_NOW_PLAYING);
-            if (null == fragment) {
-                fragment = new NowPlayingFragment();
-            }
-            fragment.setEnterTransition(new Fade());
 
-            if (true == fragment.isVisible()) {
-                transaction.show(fragment);
+            if (isTablet(mGlobalApp.getApplicationContext())) {
+                FragmentTransaction tx = mSupportFragmentManager.beginTransaction();
+                NowPlayingFragment fragment = new NowPlayingFragment();
+                tx.replace(R.id.right_side_fragment, fragment, TAG_NOW_PLAYING);
+                tx.commit();
             } else {
-                transaction.replace(R.id.sample_content_fragment, fragment, TAG_NOW_PLAYING);
+                NowPlayingFragment fragment = (NowPlayingFragment) mSupportFragmentManager.findFragmentByTag(TAG_NOW_PLAYING);
+                if (null == fragment) {
+                    fragment = new NowPlayingFragment();
+                }
+                fragment.setEnterTransition(new Fade());
+
+                if (true == fragment.isVisible()) {
+                    transaction.show(fragment);
+                } else {
+                    transaction.replace(R.id.sample_content_fragment, fragment, TAG_NOW_PLAYING);
+                }
             }
             mNavigationView.setCheckedItem(R.id.nav_now_playing);
 
@@ -415,7 +431,10 @@ public class MainActivity extends AppCompatActivity
         }
 
         transaction.commitAllowingStateLoss();
+    }
 
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
     @Override
