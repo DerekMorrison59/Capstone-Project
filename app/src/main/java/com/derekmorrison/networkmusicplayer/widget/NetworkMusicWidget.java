@@ -74,35 +74,9 @@ public class NetworkMusicWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.network_music_widget);
         views.setTextViewText(R.id.widget_title, songName);
         views.setTextViewText(R.id.widget_artist, artistName);
-
         views.setImageViewBitmap(R.id.widget_image, AlbumArt.getInstance().getArtWork(songDbId, albumId));
-
-//        mPauseDrawable = BitmapFactory.decodeResource(context.getResources(), R.drawable.uamp_ic_pause_white_24dp);
-//        mPlayDrawable = BitmapFactory.decodeResource(context.getResources(), R.drawable.uamp_ic_play_arrow_white_24dp);
-
-//        pkg = context.getPackageName();
-//
-//        mPauseIntent = PendingIntent.getBroadcast(context, WIDGET_REQUEST_CODE_PAUSE,
-//                new Intent(MediaNotificationManager.ACTION_PAUSE).setPackage(pkg), PendingIntent.FLAG_CANCEL_CURRENT);
-//        mPlayIntent = PendingIntent.getBroadcast(context, WIDGET_REQUEST_CODE_PLAY,
-//                new Intent(MediaNotificationManager.ACTION_PLAY).setPackage(pkg), PendingIntent.FLAG_CANCEL_CURRENT);
-//        mNextIntent = PendingIntent.getBroadcast(context, WIDGET_REQUEST_CODE_PREVIOUS,
-//                new Intent(MediaNotificationManager.ACTION_NEXT).setPackage(pkg), PendingIntent.FLAG_CANCEL_CURRENT);
-//        mPreviousIntent = PendingIntent.getBroadcast(context, WIDGET_REQUEST_CODE_NEXT,
-//                new Intent(MediaNotificationManager.ACTION_PREV).setPackage(pkg), PendingIntent.FLAG_CANCEL_CURRENT);
-
         views.setOnClickPendingIntent(R.id.widgetPrevious, mPreviousIntent);
         views.setOnClickPendingIntent(R.id.widgetNext, mNextIntent);
-
-
-//        Intent intent = new Intent(mContext, NowPlayingFragment.class);                MainActivity
-//        PendingIntent pi = PendingIntent.getActivity(context, 99 /*request code*/,
-//                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-//        Intent mainAppIntent = new Intent(context, NowPlayingFragment.class);
-
-//        Intent mainAppIntent = new Intent(context, MainActivity.class);
-//        mLaunchApp = PendingIntent.getActivity(context, 98, mainAppIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         views.setOnClickPendingIntent(R.id.widget_item_layout, mLaunchApp);
 
         //Log.d(TAG, "updateAppWidget - mState: " + mState);
@@ -144,7 +118,7 @@ public class NetworkMusicWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d(TAG, "UUUUUUUUUUUUUUUUUUUUU       onUpdate  ");
+        //Log.d(TAG, "UUUUUUUUUUUUUUUUUUUUU       onUpdate  ");
         mPauseDrawable = BitmapFactory.decodeResource(context.getResources(), R.drawable.uamp_ic_pause_white_24dp);
         mPlayDrawable = BitmapFactory.decodeResource(context.getResources(), R.drawable.uamp_ic_play_arrow_white_24dp);
 
@@ -162,10 +136,6 @@ public class NetworkMusicWidget extends AppWidgetProvider {
         Intent mainAppIntent = new Intent(context, MainActivity.class);
         mLaunchApp = PendingIntent.getActivity(context, 98, mainAppIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        // There may be multiple widgets active, so update all of them
-//        for (int appWidgetId : appWidgetIds) {
-//            updateAppWidget(context, appWidgetManager, appWidgetId);
-//        }
     }
 
     @Override
