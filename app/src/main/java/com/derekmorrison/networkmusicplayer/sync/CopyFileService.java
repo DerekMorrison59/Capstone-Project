@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 
+import com.derekmorrison.networkmusicplayer.R;
 import com.derekmorrison.networkmusicplayer.ui.MainActivity;
 import com.derekmorrison.networkmusicplayer.util.Utility;
 
@@ -28,9 +29,7 @@ import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 
 /**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p/>
+ *
  */
 public class CopyFileService extends IntentService {
 
@@ -87,11 +86,11 @@ public class CopyFileService extends IntentService {
         mSongId = songId;
         mListId = listId;
 
-        Log.d("CopyFileService", "handleActionFileCopy - songId: " + songId + " filePath: " + filePath);
+//        Log.d("CopyFileService", "handleActionFileCopy - songId: " + songId + " filePath: " + filePath);
 
         if (false == Utility.getInstance().isWiFiConnected()) {
 
-            Snackbar.make(MainActivity.getReferenceView(), "WiFi Network is not connected!",
+            Snackbar.make(MainActivity.getReferenceView(), R.string.wifi_not_available,
                     Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
@@ -142,17 +141,17 @@ public class CopyFileService extends IntentService {
                 //fileOutputStream = new FileOutputStream(destFilename);
                 File file = new File(path, destFilename);
                 if (file.exists()) {
-                    Log.d("CopyFileService", "file already exists: " + destFilename);
+//                    Log.d("CopyFileService", "file already exists: " + destFilename);
                 } else {
-                    Log.d("CopyFileService", "copy file from network: " + path + "/" + destFilename);
+//                    Log.d("CopyFileService", "copy file from network: " + path + "/" + destFilename);
                     fileOutputStream = new FileOutputStream(file);
 
                     fileInputStream = source.getInputStream();
                     buf = new byte[16 * 1024 * 1024];
                     while ((len = fileInputStream.read(buf)) > 0) {
-                        Log.d("CopyFileService", "writing buffer to file: " + destFilename);
+//                        Log.d("CopyFileService", "writing buffer to file: " + destFilename);
                         fileOutputStream.write(buf, 0, len);
-                        Log.d("CopyFileService", "finished writing buffer of length: " + len);
+//                        Log.d("CopyFileService", "finished writing buffer of length: " + len);
                     }
 
                     if (null != fileInputStream) {
@@ -169,25 +168,6 @@ public class CopyFileService extends IntentService {
                 ScanParams scanParams = new ScanParams(file.toString(), mSongId, mListId);
                 ScanMediaTask smt = new ScanMediaTask();
                 smt.execute(scanParams);
-/*
-                MediaScannerConnection.scanFile(this,
-                        new String[]{file.toString()}, null,
-                        new MediaScannerConnection.OnScanCompletedListener() {
-                            public void onScanCompleted(String path, Uri uri) {
-                                Log.i("***** MediaScanner", "ExternalStorage Scanned " + path + ":");
-                                Log.i("CopyFileService", "-> uri=" + uri);
-
-                                // start the service that updates the metadata from the file
-                                ScanFileService.startFileScan(mContext, path, uri, songId, listId);
-
-                                // release the main thread (the 'await' statement below)
-                                //scanLatch.countDown();
-                                //Date ended = new Date();
-                                //Log.d(" TTTTT CopyFileService", "latch.countDown() called at " + ended.toString());
-                                gateLatch = false;
-                            }
-                        });
-*/
 
                 try {
                     //Date started = new Date();
@@ -247,8 +227,8 @@ public class CopyFileService extends IntentService {
                     filename, null,
                     new MediaScannerConnection.OnScanCompletedListener() {
                         public void onScanCompleted(String path, Uri uri) {
-                            Log.i("***** MediaScanner", "ExternalStorage Scanned " + path + ":");
-                            Log.i("CopyFileService", "-> uri=" + uri);
+//                            Log.i("***** MediaScanner", "ExternalStorage Scanned " + path + ":");
+//                            Log.i("CopyFileService", "-> uri=" + uri);
 
                             // start the service that updates the metadata from the file
                             ScanFileService.startFileScan(mContext, path, uri, songId, listId);

@@ -18,11 +18,7 @@ import com.derekmorrison.networkmusicplayer.ui.GlobalApp;
 import com.derekmorrison.networkmusicplayer.util.SongListHelper;
 
 /**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p/>
- * TODO: Customize class - update intent actions, extra parameters and static
- * helper methods.
+ *
  */
 public class ScanFileService extends IntentService {
     private static final String TAG = "ScanFileService";
@@ -41,10 +37,7 @@ public class ScanFileService extends IntentService {
     }
 
     /**
-     * Starts this service to perform action Foo with the given parameters. If
-     * the service is already performing a task this action will be queued.
      *
-     * @see IntentService
      */
     public static void startFileScan(Context context, String filePath, Uri fileUri, int songId, int listId) {
         mContext = context;
@@ -72,18 +65,16 @@ public class ScanFileService extends IntentService {
     }
 
     /**
-     * Handle action Foo in the provided background thread with the provided
-     * parameters.
      */
     private void handleActionFileScan(String filePath, String fileUri, int songId, int listId) {
 
-        Log.d(TAG, "============================================================ ");
-        Log.d(TAG, "filePath: " + filePath);
-        Log.d(TAG, "fileUri: " + fileUri);
-        Log.d(TAG, "songId: " + songId);
-        Log.d(TAG, "listId: " + listId);
-        Uri uri = Uri.parse(fileUri);
-        Log.d(TAG, "uri: " + uri);
+//        Log.d(TAG, "============================================================ ");
+//        Log.d(TAG, "filePath: " + filePath);
+//        Log.d(TAG, "fileUri: " + fileUri);
+//        Log.d(TAG, "songId: " + songId);
+//        Log.d(TAG, "listId: " + listId);
+//        Uri uri = Uri.parse(fileUri);
+//        Log.d(TAG, "uri: " + uri);
 
         // grab data from MediaScannerConnection
         // update database
@@ -102,14 +93,14 @@ public class ScanFileService extends IntentService {
 
         // if the cursor doesn't contain data then bail out now
         if (null == musicCursor) {
-            Log.d(TAG, "$$$$ DID NOT find the song locally, ID: " + musicId);
+//            Log.d(TAG, "$$$$ DID NOT find the song locally, ID: " + musicId);
 
             //if (null == musicCursor || false == musicCursor.moveToFirst()) {
             return;
         }
 
         while (musicCursor.moveToNext()) {
-            Log.d(TAG, "????? Found at least one song: " + musicCursor.getCount());
+//            Log.d(TAG, "????? Found at least one song: " + musicCursor.getCount());
 
             // get important column numbers
             int titleColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
@@ -170,15 +161,12 @@ public class ScanFileService extends IntentService {
                     .putLong(MediaMetadataCompat.METADATA_KEY_DISC_NUMBER, songId)
                     .build();
 
-
-            // todo add the newTrack using the listId
+            // if this song is contained in the current playlist then make sure the current
+            // songlist is updated with this data
             if (SongListHelper.SONG_LIST_CURRENT == listId) {
-                Log.d(TAG, "Adding song to the current list: " + title);
-
+//                Log.d(TAG, "Adding song to the current list: " + title);
                 ((GlobalApp) getApplication()).getSongList().updateSong(newTrack);
             }
-
-
 
             // specify the column to use
             String nodeColumns = NMPContract.SongEntry.COLUMN_SONG_ID + " = ? ";
@@ -198,13 +186,9 @@ public class ScanFileService extends IntentService {
             // update the database if this is the first time this song has been found on the system
             boolean updateDb = false;
             if (songCursor != null && songCursor.moveToFirst()) {
-                // if the song has not been deep scanned then mark it for updating
+                // if the song has not been deep scanned before then mark it for updating now
                 updateDb = (songCursor.getInt(NMPContract.SongEntry.COL_SONG_DEEP_SCAN) == 0);
             }
-
-//            public static final String COLUMN_SONG_LAST_PLAYED = "last_played";
-//            public static final String COLUMN_SONG_PLAY_COUNT = "play_count";
-            //values.put(NMPContract.SongEntry.COLUMN_, yearS);
 
             if (null != songCursor) {
                 songCursor.close();
@@ -224,7 +208,6 @@ public class ScanFileService extends IntentService {
                 values.put(NMPContract.SongEntry.COLUMN_SONG_GENRE, genre);
                 values.put(NMPContract.SongEntry.COLUMN_SONG_ART_URL, albumPath);
                 values.put(NMPContract.SongEntry.COLUMN_SONG_YEAR, year);
-
 
                 int updatedRows = getContentResolver().update(
                         NMPContract.SongEntry.CONTENT_URI,
@@ -259,7 +242,8 @@ public class ScanFileService extends IntentService {
                 }
             }
         }catch(Exception e){
-            // todo log this problem and deal with it properly
+            Log.e(TAG, "Exception in getFilePathFromContentUri ");
+            e.printStackTrace();
         }
 
         if (null != cursor) {
@@ -269,6 +253,7 @@ public class ScanFileService extends IntentService {
         return filePath;
     }
 
+    // the ID is the last part of the uri string (after the last / character)
     private String getIdFromUri(String uri) {
         String id ="";
         int i = uri.lastIndexOf('/');
