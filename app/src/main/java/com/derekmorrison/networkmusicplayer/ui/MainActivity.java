@@ -23,6 +23,8 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v7.app.ActionBar;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -60,7 +62,6 @@ public class MainActivity extends AppCompatActivity
     public static final int FRAGMENT_SHARE = 7;
     public static final int FRAGMENT_FAV_DIRS = 8;
 
-
     public static final String TAG_INITIAL_SCAN = "initial_scan";
     public static final String TAG_ALL_SERVERS = "all_servers";
     public static final String TAG_DIRECTORY = "directory";
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity
     private static View mReferenceView;
 
     private FirebaseAnalytics mFirebaseAnalytics;
-
 
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -302,9 +302,7 @@ public class MainActivity extends AppCompatActivity
 
 
     }
-*/
 
-/*
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -345,6 +343,8 @@ public class MainActivity extends AppCompatActivity
             if (null == fragment) {
                 fragment = new NowPlayingFragment();
             }
+            fragment.setEnterTransition(new Fade());
+
             if (true == fragment.isVisible()) {
                 transaction.show(fragment);
             } else {
@@ -354,6 +354,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (FRAGMENT_PLAYLIST == newFragment) {
             EditPlaylistFragment fragment = new EditPlaylistFragment();
+            fragment.setEnterTransition(new Fade());
             transaction.replace(R.id.sample_content_fragment, fragment, TAG_EDIT_PLAYLIST);
             mNavigationView.setCheckedItem(R.id.nav_current_playlist);
         } else if (FRAGMENT_ALL_PLAYLIST == newFragment) {
@@ -365,6 +366,7 @@ public class MainActivity extends AppCompatActivity
             if (null == fragment) {
                 fragment = new DirectoryFragment();
             }
+            fragment.setEnterTransition(new Fade());
             if (true == fragment.isVisible()) {
                 transaction.show(fragment);
             } else {
@@ -373,6 +375,7 @@ public class MainActivity extends AppCompatActivity
             mNavigationView.setCheckedItem(R.id.nav_current_folder);
         } else if (FRAGMENT_FAV_DIRS == newFragment) {
             FavFolderFragment fragment = new FavFolderFragment();
+            fragment.setEnterTransition(new Fade());
             transaction.replace(R.id.sample_content_fragment, fragment, TAG_FAV_DIRS);
         } else if (FRAGMENT_ALL_SERVERS == newFragment) {
 
@@ -385,6 +388,7 @@ public class MainActivity extends AppCompatActivity
             if (null == fragment) {
                 fragment = new DirectoryFragment();
             }
+            fragment.setEnterTransition(new Fade());
             if (true == fragment.isVisible()) {
                 SharedPrefUtils.getInstance().saveFileListPosition(0);
                 SharedPrefUtils.getInstance().saveDirListPosition(0);
@@ -399,6 +403,7 @@ public class MainActivity extends AppCompatActivity
             if (null == fragment) {
                 fragment = new InitialScanFragment();
             }
+            fragment.setEnterTransition(new Fade());
             transaction.replace(R.id.sample_content_fragment, fragment, TAG_INITIAL_SCAN);
 
         } else if (FRAGMENT_ONBOARDING == newFragment) {
